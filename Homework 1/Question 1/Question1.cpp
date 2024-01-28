@@ -28,7 +28,7 @@ int main()
 	// dynamic memory allocation
 	for (int i = 0; i < front_occupants; ++i)
 	{
-		std::cout << "Enter weight for front occupant " << i << ": ";
+		std::cout << "Enter weight for front occupant " << i+1 << ": ";
 		std::cin >> weight_front_occupants[i];
 	}
 
@@ -45,7 +45,7 @@ int main()
 	// dynamic memory allocation
 	for (int i = 0; i < rear_occupants; ++i)
 	{
-		std::cout << "Enter weight for rear occupant " << i << ": ";
+		std::cout << "Enter weight for rear occupant " << i+1 << ": ";
 		std::cin >> weight_rear_occupants[i];
 	}
 	std::cout << "Enter rear seat moment arm (inches): " << std::endl;
