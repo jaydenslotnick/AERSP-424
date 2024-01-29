@@ -114,14 +114,30 @@ int main()
 
 		if (cg_location < forward_cg_limit)
 		{
-			fuel_change += 0.01;
+			if (fuel_tank_moment_arm < forward_cg_limit)
+			{
+				fuel_change += 0.01;
+			}
+			else
+			{
+				fuel_change -= 0.01;
+			}
+			
 		}
 
 
 		else if (cg_location > aft_cg_limit)
 		{
-			fuel_change -= 0.01;
+			if (fuel_tank_moment_arm > aft_cg_limit)
+			{
+				fuel_change -= 0.01;
+			}
+			else
+			{
+				fuel_change += 0.01;
+			}
 		}
+		std::cout << fuel_change << std::endl;
 
 	} while (gross_weight > max_gross_weight || cg_location < forward_cg_limit || cg_location > aft_cg_limit);
 
