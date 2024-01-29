@@ -12,8 +12,6 @@ int main()
 	double fuel_tank_moment_arm; // inches
 	double baggage_weight; // pounds
 	double baggage_moment_arm; // inches
-	double cg_num;
-	double cg_den;
 
 	std::cout << "Enter empty weight (pounds): " << std::endl;
 	std::cin >>  empty_weight;
@@ -103,16 +101,18 @@ int main()
 		std::cout << "The plane is not within the given design limits" << std::endl;
 	}
 
-	std::cout << gross_weight << std::endl;
-	std::cout << cg_location << std::endl;
-	double fuel_change = 0;
+
+	double fuel_change = 0; // intermediate fuel change variable
+	double initial_fuel_change;  // used if the weight is greater than the max weight
+	double fuel_track; // keeps track of all fuel changes
 	while (gross_weight > max_gross_weight || cg_location < forward_cg_limit || cg_location > aft_cg_limit)
 	{
 
 		if (gross_weight > max_gross_weight)
 		{
-			fuel_change = gross_weight - max_gross_weight;
+			initial_fuel_change = gross_weight - max_gross_weight;
 			gross_weight = max_gross_weight;
+			fuel_track = initial_fuel_change;
 		}
 
 		if (cg_location < forward_cg_limit)
@@ -140,20 +140,21 @@ int main()
 				fuel_change += 0.01;
 			}
 		}
-		std::cout << gross_weight << std::endl;
-		std::cout << cg_location << std::endl;
 
 		total_fuel_weight += fuel_change;
+		fuel_track += fuel_change;
 
 		gross_weight = gross_weight + fuel_change;
-		total_moment += total_fuel_weight * fuel_tank_moment_arm + baggage_weight * baggage_moment_arm;
+		total_moment += fuel_change*fuel_tank_moment_arm;
 		cg_location = total_moment / gross_weight;
 		fuel_change = 0;
 
 
 	} 
-
-	std::cout << "Adjusted fuel to meet design limits: " << fuel_change << std::endl;
+	std::cout << " " << std::endl;
+	std::cout << "The amount of fuel that needs to be added/drained is (pounds): " << fuel_track << std::endl;
+	std::cout << "New gross weight (pounds): " << gross_weight << std::endl;
+	std::cout << "New center of gravity location (inches): " << cg_location << std::endl;
 
 
 
