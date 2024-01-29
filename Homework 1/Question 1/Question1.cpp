@@ -105,16 +105,17 @@ int main()
 	double fuel_change = 0; // intermediate fuel change variable
 	double initial_fuel_change;  // used if the weight is greater than the max weight
 	double fuel_track; // keeps track of all fuel changes
-	while (gross_weight > max_gross_weight || cg_location < forward_cg_limit || cg_location > aft_cg_limit)
+	if (gross_weight > max_gross_weight)
 	{
+		initial_fuel_change = gross_weight - max_gross_weight;
+		gross_weight = max_gross_weight;
+		fuel_track = initial_fuel_change;
 
-		if (gross_weight > max_gross_weight)
-		{
-			initial_fuel_change = gross_weight - max_gross_weight;
-			gross_weight = max_gross_weight;
-			fuel_track = initial_fuel_change;
-		}
-
+		total_moment -= initial_fuel_change * fuel_tank_moment_arm;
+		cg_location = total_moment / gross_weight;
+	}
+	while (cg_location < forward_cg_limit || cg_location > aft_cg_limit)
+	{
 		if (cg_location < forward_cg_limit)
 		{
 			if (fuel_tank_moment_arm < forward_cg_limit)
