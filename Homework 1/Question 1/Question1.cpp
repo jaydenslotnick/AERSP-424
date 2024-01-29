@@ -12,6 +12,8 @@ int main()
 	double fuel_tank_moment_arm; // inches
 	double baggage_weight; // pounds
 	double baggage_moment_arm; // inches
+	double cg_num;
+	double cg_den;
 
 	std::cout << "Enter empty weight (pounds): " << std::endl;
 	std::cin >>  empty_weight;
@@ -64,7 +66,7 @@ int main()
 
 	// Allocates variables for the gross weight and cg location
 	double gross_weight = empty_weight;
-	double total_moment = empty_weight * empty_weight_moment;
+	double total_moment = empty_weight_moment;
 
 	// Sets limits for gross weight and cg location
 	double max_gross_weight = 2950; // pounds
@@ -84,9 +86,9 @@ int main()
 		total_moment += weight_rear_occupants[i] * rear_seat_moment_arm;
 	}
 
-
+	double total_fuel_weight = usable_fuel * weight_usable_fuel;
 	gross_weight += usable_fuel * weight_usable_fuel + baggage_weight;
-	total_moment += usable_fuel * weight_usable_fuel * fuel_tank_moment_arm + baggage_weight * baggage_moment_arm;
+	total_moment += total_fuel_weight * fuel_tank_moment_arm + baggage_weight * baggage_moment_arm;
 
 	double cg_location;
 	cg_location = total_moment / gross_weight;
@@ -101,9 +103,10 @@ int main()
 		std::cout << "The plane is not within the given design limits" << std::endl;
 	}
 
-	
+	std::cout << gross_weight << std::endl;
+	std::cout << cg_location << std::endl;
 	double fuel_change = 0;
-	do 
+	while (gross_weight > max_gross_weight || cg_location < forward_cg_limit || cg_location > aft_cg_limit)
 	{
 
 		if (gross_weight > max_gross_weight)
@@ -116,11 +119,11 @@ int main()
 		{
 			if (fuel_tank_moment_arm < forward_cg_limit)
 			{
-				fuel_change += 0.01;
+				fuel_change -= 0.01;
 			}
 			else
 			{
-				fuel_change -= 0.01;
+				fuel_change += 0.01;
 			}
 			
 		}
@@ -137,9 +140,18 @@ int main()
 				fuel_change += 0.01;
 			}
 		}
-		std::cout << fuel_change << std::endl;
+		std::cout << gross_weight << std::endl;
+		std::cout << cg_location << std::endl;
 
-	} while (gross_weight > max_gross_weight || cg_location < forward_cg_limit || cg_location > aft_cg_limit);
+		total_fuel_weight += fuel_change;
+
+		gross_weight = gross_weight + fuel_change;
+		total_moment += total_fuel_weight * fuel_tank_moment_arm + baggage_weight * baggage_moment_arm;
+		cg_location = total_moment / gross_weight;
+		fuel_change = 0;
+
+
+	} 
 
 	std::cout << "Adjusted fuel to meet design limits: " << fuel_change << std::endl;
 
