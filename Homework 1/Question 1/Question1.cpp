@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 int main()
 {
@@ -90,6 +91,8 @@ int main()
 
 	double cg_location;
 	cg_location = total_moment / gross_weight;
+	std::cout << "Inital gross weight (pounds): " << gross_weight << std::endl;
+	std::cout << "Initial CG location: " << cg_location << std::endl;
 
 	if (gross_weight < max_gross_weight && cg_location >= forward_cg_limit && cg_location <= aft_cg_limit)
 	{
@@ -109,7 +112,7 @@ int main()
 	{
 		initial_fuel_change = gross_weight - max_gross_weight;
 		gross_weight = max_gross_weight;
-		fuel_track = initial_fuel_change;
+		fuel_track = -initial_fuel_change;
 
 		total_moment -= initial_fuel_change * fuel_tank_moment_arm;
 		cg_location = total_moment / gross_weight;
