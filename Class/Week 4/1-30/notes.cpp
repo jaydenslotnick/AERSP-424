@@ -3,8 +3,7 @@
 
 int main()
 {
-
-
+	double test;
 
 
 	return 0;
