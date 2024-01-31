@@ -108,6 +108,8 @@ int main()
 	double fuel_change = 0; // intermediate fuel change variable
 	double initial_fuel_change;  // used if the weight is greater than the max weight
 	double fuel_track; // keeps track of all fuel changes
+
+	// Checks if gross weight is larger than max and subtracts it to the max if it is
 	if (gross_weight > max_gross_weight)
 	{
 		initial_fuel_change = gross_weight - max_gross_weight;
@@ -117,8 +119,13 @@ int main()
 		total_moment -= initial_fuel_change * fuel_tank_moment_arm;
 		cg_location = total_moment / gross_weight;
 	}
+
+	// Runs while the cg location is not within limits
 	while (cg_location < forward_cg_limit || cg_location > aft_cg_limit)
 	{
+		// If the cg location is less than the forward limit, it will add or substract fuel based on where the fuel moment arm is
+		// If the fuel moment arm is less than the forward limit, fuel will need to be subtracted to shift the cg location backwards
+		// If the fuel moment arm is greater than the forward limit, fuel will need to be added to shift the cg location backwards
 		if (cg_location < forward_cg_limit)
 		{
 			if (fuel_tank_moment_arm < forward_cg_limit)
@@ -132,7 +139,9 @@ int main()
 			
 		}
 
-
+		// If the cg location is greater than the aft limit, it will add or substract fuel based on where the fuel moment arm is
+		// If the fuel moment arm is greater than the aft limit, fuel will need to be subtracted to shift the cg location forwards
+		// If the fuel moment arm is less than the aft limit, fuel will need to be added to shift the cg location forwards
 		else if (cg_location > aft_cg_limit)
 		{
 			if (fuel_tank_moment_arm > aft_cg_limit)
@@ -146,12 +155,13 @@ int main()
 		}
 
 		total_fuel_weight += fuel_change;
-		fuel_track += fuel_change;
+		fuel_track += fuel_change; // tracks total fuel change
 
-		gross_weight = gross_weight + fuel_change;
+		// modifies gross weight and total moment and cg location
+		gross_weight = gross_weight + fuel_change; 
 		total_moment += fuel_change*fuel_tank_moment_arm;
 		cg_location = total_moment / gross_weight;
-		fuel_change = 0;
+		fuel_change = 0; // resets fuel change for the next loop
 
 
 	} 
