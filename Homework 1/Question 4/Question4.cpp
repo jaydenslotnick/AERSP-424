@@ -77,14 +77,18 @@ public:
 
 };
 
+int operate() {
+
+	
+
+
+	return 0;
+}
+
 
 
 int main()
 {
-	std::cout << "Test text" << std::endl;
-
-
-
 
 	return 0;
 }
