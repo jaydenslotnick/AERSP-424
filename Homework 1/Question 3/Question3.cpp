@@ -13,7 +13,7 @@ private:
 	bool at_SCE;
 	std::string origin;
 	std::string destination;
-	std::map< std::string, double > flights;
+	std::map<std::string, std::map<std::string, double>> flights;
 
 
 public:
@@ -55,7 +55,7 @@ public:
 		return vel;
 	}
 
-	void setVal(double new_vel) {
+	void setVel(double new_vel) {
 		vel = new_vel;
 	}
 

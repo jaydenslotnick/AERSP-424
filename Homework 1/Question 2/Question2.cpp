@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <string>
 
 int main()
 {
@@ -7,10 +8,10 @@ int main()
 	// and the flight distance as the value
 
 	// The three flights and values were set as new elements
-	std::map< std::string, double > flights;
-	flights.insert(std::make_pair("SCE_PHL", 160)); // State college and Philly
-	flights.insert(std::make_pair("SCE_ORD", 640)); // State college and Chicago
-	flights.insert(std::make_pair("SCE_EWR", 220)); // State college and Newark
+	std::map<std::string, std::map<std::string, double>> flights;
+	flights["SCE"]["PHL"] = 160; // State college and Philly
+	flights["SCE"]["ORD"] = 640; // State college and Chicago
+	flights["SCE"]["EWR"] = 220; // State college and Newark
 
 	return 0;
 }

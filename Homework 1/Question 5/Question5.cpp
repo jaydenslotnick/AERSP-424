@@ -43,34 +43,35 @@ public:
 	//function named operate that returns nothing, takes dt in and an input
 	void operate(double dt)
 	{
-		// follows logic of the flowchart in the problem statement
 		if (pos < distance)
 		{
 			pos += vel * dt;
-			at_SCE = 0;
+			at_SCE = false;
 		}
 
 		else
 		{
+			// follows logic of the flowchart in the problem statement in Question 4
 			if (destination == "SCE")
 			{
-
 				// uses a temp variable to swap the origin and destination
-				at_SCE = 1;
+				at_SCE = true;
 				std::string temp;
 				temp = origin;
 				origin = destination;
 				destination = temp;
+				pos = 0;
 			}
 			else
 			{
-				// uses a temp variable to swap the origin and destinatio
+				// uses a temp variable to swap the origin and destination
 				std::string temp2;
 				temp2 = origin;
 				origin = destination;
 				destination = temp2;
+				pos = 0;
 			}
-			pos = 0;
+			
 		}
 	}
 
@@ -79,12 +80,12 @@ public:
 		return pos;
 	}
 
-	double getOrigin() {
-		return pos;
+	std::string getOrigin() {
+		return origin;
 	}
 
-	double getDestination() {
-		return pos;
+	std::string getDestination() {
+		return destination;
 	}
 	bool getAt_SCE() {
 		return at_SCE;
@@ -107,6 +108,24 @@ public:
 
 int main()
 {
+	Plane Q5("SCE", "PHL");
+
+	Q5.setVel(400); // 400 mph plane speed
+	double dt = 15; // timestep of 10 seconds
+	dt = dt / 3600; // convertion to hours
+
+	// sets iterations
+	int max_iterations;
+	max_iterations = 1000; 
+
+	for (int i = 0; i < max_iterations; ++i)
+	{
+		// calls the operate function for each time step
+		
+		Q5.operate(dt);
+		std::cout << "Time: " << dt *3600* i << " seconds, Position: " << Q5.getPos() << "miles." << std::endl;
+	}
+
 
 	return 0;
 }
