@@ -45,7 +45,8 @@ public:
 	void operate(double dt)
 	{
 		
-		if (pos < distance)
+		// checks to make sure the position calculated will be less than or equal to the distance
+		if (pos + vel * dt <= distance)
 		{
 			pos += vel * dt;
 			at_SCE = false;
@@ -62,7 +63,7 @@ public:
 				temp = origin;
 				origin = destination;
 				destination = temp;
-				pos = 0;
+				pos = 0.0;
 			}
 			else
 			{
@@ -71,7 +72,7 @@ public:
 				temp2 = origin;
 				origin = destination;
 				destination = temp2;
-				pos = 0;
+				pos = 0.0;
 			}
 
 		}

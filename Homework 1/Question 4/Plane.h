@@ -45,7 +45,8 @@ public:
 	void operate(double dt)
 	{
 		// follows logic of the flowchart in the problem statement
-		if (pos < distance)
+		// checks to make sure the position calculated will be less than or equal to the distance
+		if (pos + vel * dt < distance)
 		{
 			pos += vel * dt;
 			at_SCE = 0;

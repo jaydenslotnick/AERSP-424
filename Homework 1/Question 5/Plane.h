@@ -44,15 +44,15 @@ public:
 	//function named operate that returns nothing, takes dt in and an input
 	void operate(double dt)
 	{
-		
-		if (pos < distance)
+		// checks to make sure the position calculated will be less than or equal to the distance
+		if (pos + vel*dt <= distance)
 		{
 			pos += vel * dt;
 			at_SCE = false;
 		}
 
 		else
-		{
+		{	
 			// follows logic of the flowchart in the problem statement in Question 4
 			if (destination == "SCE")
 			{
@@ -62,7 +62,7 @@ public:
 				temp = origin;
 				origin = destination;
 				destination = temp;
-				pos = 0;
+				pos = 0.0;
 			}
 			else
 			{
@@ -71,7 +71,7 @@ public:
 				temp2 = origin;
 				origin = destination;
 				destination = temp2;
-				pos = 0;
+				pos = 0.0;
 			}
 
 		}

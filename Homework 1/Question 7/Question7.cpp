@@ -26,7 +26,10 @@ int main()
 	for (int i = 0; i < max_iterations; ++i)
 	{
 		// calls operate function
-		Q5.operate(dt);
+		if (i == 0) // makes it so that the first timestep is zero seconds
+			Q5.operate(dt * 0);
+		else
+			Q5.operate(dt * 1);
 
 		// initally if plane is at State college and prints Alpha is in control of the plane if it is
 		if (i == 0)
