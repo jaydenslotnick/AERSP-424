@@ -7,15 +7,15 @@
 
 int main()
 {
-	Plane Q5("SCE", "PHL");
+	Plane Q5("SCE", "PHL"); // creates plane object and sets locations
 
-	Q5.setVel(400); // 400 mph plane speed
-	double dt = 15; // timestep of 15 seconds
+	Q5.setVel(450); // set velocity
+	double dt = 15; // set timestep
 	dt = dt / 3600; // convertion to hours
 
 	// sets iterations
 	int max_iterations;
-	max_iterations = 1000; 
+	max_iterations = 1500; 
 
 	for (int i = 0; i < max_iterations; ++i)
 	{

@@ -4,6 +4,9 @@
 
 #ifndef PLANE
 #define PLANE
+
+
+
 class Plane {
 private:
 
@@ -31,8 +34,7 @@ public:
 		// distance variable based on inputs from and to
 		distance = flights[from][to];
 
-		std::cout << "Plane Created" << std::endl;
-		std::cout << "Memory address of object: " << this << std::endl;
+		std::cout << "Plane created, memory address of object: " << this << std::endl;
 
 	}
 	~Plane() {
@@ -45,14 +47,14 @@ public:
 	void operate(double dt)
 	{
 		// checks to make sure the position calculated will be less than or equal to the distance
-		if (pos+vel*dt <= distance)
+		if (pos + vel * dt <= distance)
 		{
 			pos += vel * dt;
 			at_SCE = false;
 		}
 
 		else
-		{	
+		{
 			// follows logic of the flowchart in the problem statement in Question 4
 			if (destination == "SCE")
 			{
@@ -62,7 +64,7 @@ public:
 				temp = origin;
 				origin = destination;
 				destination = temp;
-				pos = 0.0;
+				pos = 0;
 			}
 			else
 			{
@@ -71,7 +73,7 @@ public:
 				temp2 = origin;
 				origin = destination;
 				destination = temp2;
-				pos = 0.0;
+				pos = 0;
 			}
 
 		}
@@ -105,5 +107,4 @@ public:
 
 
 };
-
 #endif
