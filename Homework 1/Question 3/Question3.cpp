@@ -8,8 +8,5 @@ int main()
 {
 	std::cout << "See .h file for Plane class" << std::endl;
 
-
-
-
 	return 0;
 }

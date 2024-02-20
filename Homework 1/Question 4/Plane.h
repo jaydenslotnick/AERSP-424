@@ -21,7 +21,7 @@ public:
 	// initalizes public members
 
 	// constructor with variables and container
-	Plane(const std::string& from, const std::string& to) : pos(0.0), vel(0.0), at_SCE(true), origin(from), destination(to) {
+	Plane(const std::string& from, const std::string& to) : pos(0.0), vel(0.0), at_SCE(false), origin(from), destination(to) {
 
 		// container from question 2
 		flights["SCE"]["PHL"] = 160; // State college and Philly
@@ -53,7 +53,7 @@ public:
 		}
 
 		else
-		{
+		{	// checks to see whether the destination is at state college
 			if (destination == "SCE")
 			{
 
@@ -72,7 +72,7 @@ public:
 				origin = destination;
 				destination = temp2;
 			}
-			pos = 0;
+			pos = 0; // resets position to zero
 		}
 	}
 

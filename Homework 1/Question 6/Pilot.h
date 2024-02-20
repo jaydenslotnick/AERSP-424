@@ -23,6 +23,8 @@ public:
 		std::cout << "At the gate, ready to board the plane" << std::endl;
 	}
 
+
+	// deconstructor
 	~Pilot() {
 		std::cout << "Pilot: " << name << std::endl;
 		std::cout << "Out of the plane" << std::endl;

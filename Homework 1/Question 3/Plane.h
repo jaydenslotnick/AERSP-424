@@ -14,7 +14,7 @@ private:
 	bool at_SCE;
 	std::string origin;
 	std::string destination;
-	std::map<std::string, std::map<std::string, double>> flights;
+	std::map<std::string, std::map<std::string, double>> flights; // container from question 2
 
 
 public:
@@ -23,6 +23,10 @@ public:
 	// constructor with variables and container
 	Plane(const std::string& from, const std::string& to) :origin(from), destination(to) {
 
+		// sets values of container
+		flights["SCE"]["PHL"] = 160; // State college and Philly
+		flights["SCE"]["ORD"] = 640; // State college and Chicago
+		flights["SCE"]["EWR"] = 220; // State college and Newark
 	}
 	~Plane() {
 

@@ -21,7 +21,7 @@ public:
 	// initalizes public members
 
 	// constructor with variables and container
-	Plane(const std::string& from, const std::string& to) : pos(0.0), vel(0.0), at_SCE(true), origin(from), destination(to) {
+	Plane(const std::string& from, const std::string& to) : pos(0.0), vel(0.0), at_SCE(false), origin(from), destination(to) {
 
 		// container from question 2
 		flights["SCE"]["PHL"] = 160; // State college and Philly
@@ -44,8 +44,8 @@ public:
 	//function named operate that returns nothing, takes dt in and an input
 	void operate(double dt)
 	{
-		// checks to make sure the position calculated will be less than or equal to the distance
-		if (pos+vel*dt <= distance)
+		// checks to make sure the position at the next time step is still less than distance
+		if (pos + vel * dt <= distance)
 		{
 			pos += vel * dt;
 			at_SCE = false;

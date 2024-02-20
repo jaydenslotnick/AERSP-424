@@ -18,6 +18,7 @@ public:
 	std::unique_ptr<Plane> myPlane; // pointer to an object of the plane class
 
 	// constructor with variables and container
+	// implementation of modern style pointer
 	Pilot(const std::string& pilotName, std::unique_ptr<Plane> &plane) : name(pilotName), myPlane(plane.get()) {
 		std::cout << "Pilot: " << name << " Memory address: " << this << " is at the gate, ready to board the plane" << std::endl;
 	}

@@ -14,6 +14,7 @@ int main()
 	double baggage_weight; // pounds
 	double baggage_moment_arm; // inches
 
+	// user input of the empty weight and moment arm and number of front occupants
 	std::cout << "Enter empty weight (pounds): " << std::endl;
 	std::cin >>  empty_weight;
 	std::cout << "Enter empty weight moment (pounds-inches): " << std::endl;
@@ -33,6 +34,7 @@ int main()
 		std::cin >> weight_front_occupants[i];
 	}
 
+	// user input for front seat moment arm
 	std::cout << "Enter front seat moment arm (inches): " << std::endl;
 	std::cin >>  front_seat_moment_arm;
 
@@ -49,6 +51,8 @@ int main()
 		std::cout << "Enter weight for rear occupant " << i+1 << ": ";
 		std::cin >> weight_rear_occupants[i];
 	}
+
+	// user inputs
 	std::cout << "Enter rear seat moment arm (inches): " << std::endl;
 	std::cin >> rear_seat_moment_arm;
 	std::cout << "Enter empty usable fuel (gallons): " << std::endl;
@@ -72,6 +76,8 @@ int main()
 	double forward_cg_limit = 82.1; // inches
 	double aft_cg_limit = 84.7; // inches
 
+
+	// adds in weight of the front and rear occupants
 	for (int i = 0; i < front_occupants; ++i)
 	{
 		gross_weight += weight_front_occupants[i];
@@ -85,15 +91,22 @@ int main()
 		total_moment += weight_rear_occupants[i] * rear_seat_moment_arm;
 	}
 
+	// adds in weight of total fuel and calculates total moment
 	double total_fuel_weight = usable_fuel * weight_usable_fuel;
 	gross_weight += usable_fuel * weight_usable_fuel + baggage_weight;
 	total_moment += total_fuel_weight * fuel_tank_moment_arm + baggage_weight * baggage_moment_arm;
 
+
+	// initalizes cg location and calculates the value
 	double cg_location;
 	cg_location = total_moment / gross_weight;
+
+	// outputs initial gross weight and cg location to user
 	std::cout << "Inital gross weight (pounds): " << gross_weight << std::endl;
 	std::cout << "Initial CG location: " << cg_location << std::endl;
 
+
+	// Outputs a statement depending on whether the plane meets requirements
 	if (gross_weight < max_gross_weight && cg_location >= forward_cg_limit && cg_location <= aft_cg_limit)
 	{
 		std::cout << "The plane is within the given design limits" << std::endl;
@@ -154,7 +167,7 @@ int main()
 			}
 		}
 
-		total_fuel_weight += fuel_change;
+		total_fuel_weight += fuel_change; // changes total fuel weight based on fuel_change variable
 		fuel_track += fuel_change; // tracks total fuel change
 
 		// modifies gross weight and total moment and cg location
@@ -165,15 +178,19 @@ int main()
 
 
 	} 
+
+	// outputs results to the user
 	std::cout << " " << std::endl;
 	std::cout << "The amount of fuel that needs to be added/drained is (pounds): " << fuel_track << std::endl;
 	std::cout << "New gross weight (pounds): " << gross_weight << std::endl;
 	std::cout << "New center of gravity location (inches): " << cg_location << std::endl;
 
 
-
+	// deletes dynamically allocated memory
 	delete[] weight_front_occupants;
 	delete[] weight_rear_occupants;
+
+
 	return 0;
 
 }

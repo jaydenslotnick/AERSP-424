@@ -18,10 +18,10 @@ int main()
 	// sets iterations
 	int max_iterations;
 	max_iterations = 1500; // set iterations
-	int* null_pointer = nullptr; // old style pointer
+	int* null_pointer = nullptr; // null pointer for a memory address of 0x00000000, old style pointer
 
 	Pilot Alpha("Alpha", &Q5);
-	Pilot Bravo("Bravo", nullptr);
+	Pilot Bravo("Bravo", nullptr); // null pointer for a memory address of 0x00000000
 
 	for (int i = 0; i < max_iterations; ++i)
 	{
@@ -50,6 +50,9 @@ int main()
 		}
 	}
 
+
+	// deletes old style pointer
+	delete(null_pointer);
 
 	return 0;
 }

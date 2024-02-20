@@ -45,7 +45,7 @@ public:
 	void operate(double dt)
 	{
 		
-		// checks to make sure the position calculated will be less than or equal to the distance
+		// checks to make sure the position calculated at the next time step will be less than or equal to the distance
 		if (pos + vel * dt <= distance)
 		{
 			pos += vel * dt;

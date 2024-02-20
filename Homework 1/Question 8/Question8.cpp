@@ -18,7 +18,9 @@ int main()
 	// sets iterations
 	int max_iterations;
 	max_iterations = 1500; 
-	std::unique_ptr<Plane> null_pointer(nullptr); // modern pointer
+
+	// creates a second instance of a plane class 
+	std::unique_ptr<Plane> null_pointer(nullptr);// null pointer for a memory address of 0x00000000, modern style pointer
 
 	Pilot Alpha("Alpha", Q5);
 	Pilot Bravo("Bravo", null_pointer);
