@@ -15,11 +15,14 @@ private:
 	std::vector<Sensor*> sensors;
 
 public:
+
+	// adds each desired sensor
 	void addSensor(Sensor* sensor)
 	{
 		sensors.push_back(sensor);
 	}
 
+	// this function calls the gather and process data functions for each sensor
 	void monitorAndAdjust() {
 		std::cout << "" << std::endl;
 		for (Sensor* sensor : sensors)
@@ -40,13 +43,6 @@ public:
 
 
 };
-
-
-
-
-
-
-
 
 
 

@@ -19,4 +19,4 @@ public:
 
 };
 
-#endif// SENSOR_H
+#endif
