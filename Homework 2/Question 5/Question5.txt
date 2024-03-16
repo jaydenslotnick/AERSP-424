@@ -1,0 +1,5 @@
+From Question2, what issues may happen if the robot that finished the
+task is assigned a new task immediately? And what will be a potential
+solution for the issues?
+
+If a robot is assigned a new task immediately, this could cause deadlock. It is possible that the robot thread is not exited cleanly from its previous task. Therefore, if it is assigned a new task immediately, the resources could still be used by the previous task, when the robot tries to enter the new task, the resources are taken. This could cause deadlock to occur. To fix this, a force release of the previous task could be included. This would cause the task to be terminated "manually" and make sure the resources are not longer being used. A wait time could also be added to allow for the task to be exited cleanly. 

@@ -1,0 +1,7 @@
+what issues you might obtain during the development of
+the program? What issues do you think will happen if some of the actions,
+e.g., waking up the ATC, checking the traffic pattern, entering the traffic
+pattern, diverging to another airport, etc., take time to finish? And what
+will be a potential solution for the issues?
+
+There are several issues that could arise from this program. Since there is only one air traffic controller and 10 planes, there are 10 threads attempting to access one controller which could cause deadlocks. Another issue is that the plane could land without the approval of air traffic control. This is an issue in real life as ATC could be telling one plane to land at the same time as a pilot decides that they can land. Therefore, this can cause the overallocation of resources to the traffic pattern. One potential fix would be to have one air traffic controller per plane. Therefore, the one thread would be able to access one resource at a time instead of 10 threads trying to access one resource at at a time. 
