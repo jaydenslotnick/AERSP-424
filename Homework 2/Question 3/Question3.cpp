@@ -17,14 +17,22 @@ bool land = false;
 void plane(int planeid)
 {
 
-    // Check if the traffic pattern is full
+    // incoming aircraft, pilot checks if aircraft control are talking to another pilot and the number of aircraft
     {
-        if (!atcTalking) 
+
+
+        if (numAircraft == 0)
         {
-            std::lock_guard<std::mutex> lock(m1);
+           // std::cout << "ATC is asleep" << std::endl;
+        }
+
+        if (atcTalking == false) 
+        {
+            atcTalking = true; // Set to true because atc is now talking to someone
+            m1.lock();
             // establishes a connection
             std::cout << "Aircraft " << planeid << " is requesting landing clearance." << std::endl;
-            atcTalking = true; // Set to true because atc is now talking to someone
+            
 
             if (numAircraft >= maxAircraft) 
             {
@@ -36,28 +44,38 @@ void plane(int planeid)
             {
                 std::cout << "Aircraft " << planeid << " is entering the traffic pattern." << std::endl;
                 ++numAircraft; // Adds aircraft to the traffic pattern
-                land = true;
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                std::cout << "Aircraft " << planeid << " has landed and exited the traffic pattern." << std::endl;
+                --numAircraft;
             }
 
             atcTalking = false; // Set to false after handling the request
+
+            m1.unlock();
         }
 
-        else if(numAircraft < maxAircraft && atcTalking == true)
+        else // if air traffic control is talking to another pilot
         {
-            std::cout << "Aircraft " << planeid << " is requesting landing clearance." << std::endl;
-            std::cout << "Aircraft " << planeid << " is entering the traffic pattern." << std::endl;
-            ++numAircraft; // adds aircraft to the traffic pattern
-            land = true;
+           // std::unique_lock<std::mutex> lock(m1);
+            if (numAircraft < maxAircraft) 
+            {
+                std::cout << "Aircraft " << planeid << " is requesting landing clearance." << std::endl;
+                std::cout << "Aircraft " << planeid << " is entering the traffic pattern." << std::endl;
+                ++numAircraft; // adds aircraft to the traffic pattern
+                std::this_thread::sleep_for(std::chrono::seconds(1));
+                std::cout << "Aircraft " << planeid << " has landed and exited the traffic pattern." << std::endl;
+                --numAircraft;
+            }
+
+            else
+            {
+                std::cout << "Approach pattern full. Aircraft " << planeid << " redirected to another airport" << std::endl;
+                std::cout << "Aircraft " << planeid << " flying to another airport" << std::endl;
+                --numAircraft; // Subtract a plane since it is going to another airport
+            }
+            //lock.unlock();
         }
 
-        // Land and exit the traffic pattern after landing
-        if (land == true)
-        {
-            //std::lock_guard<std::mutex> lock(m1);
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-            std::cout << "Aircraft " << planeid << " has landed and exited the traffic pattern." << std::endl;
-            --numAircraft;
-        }
 
     }
 
