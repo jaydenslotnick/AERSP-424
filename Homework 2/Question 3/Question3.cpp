@@ -20,8 +20,7 @@ void plane(int planeid)
     // incoming aircraft, pilot checks if aircraft control are talking to another pilot and the number of aircraft
 
         {
-        std::unique_lock<std::mutex> lock(m1);
-        m1.unlock();
+       
 
 
         if (numAircraft == 0)
@@ -31,26 +30,30 @@ void plane(int planeid)
 
         if (atcTalking == false) 
         {
+            std::unique_lock<std::mutex> lock(m1);
             atcTalking = true; // Set to true because atc is now talking to someone
 
             // establishes a connection
-            std::cout << "Aircraft " << planeid << " is requesting landing clearance." << std::endl;
+            printf("Aircraft %i is requesting landing clearance. \n", planeid);
+            //std::cout << "Aircraft " << planeid << " is requesting landing clearance." << std::endl;
             
 
             if (numAircraft >= maxAircraft) 
             {
-                std::cout << "Approach pattern full. Aircraft " << planeid << " redirected to another airport" << std::endl;
-                std::cout << "Aircraft " << planeid << " flying to another airport" << std::endl;
-
+                printf("Approach pattern full. Aircraft %i redirected to another airport. \n", planeid);
+                printf("Aircraft %i flying to another airport. \n", planeid);
+                //std::cout << "Approach pattern full. Aircraft " << planeid << " redirected to another airport" << std::endl;
+                //std::cout << "Aircraft " << planeid << " flying to another airport" << std::endl;
             }
             else 
             {
-                std::cout << "Aircraft " << planeid << " is entering the traffic pattern." << std::endl;
+                printf("Aircraft %i is entering the traffic pattern. \n", planeid);
+                //std::cout << "Aircraft " << planeid << " is entering the traffic pattern." << std::endl;
                 ++numAircraft; // Adds aircraft to the traffic pattern
                 std::this_thread::sleep_for(std::chrono::seconds(1));
-                std::cout << "Aircraft " << planeid << " has landed and exited the traffic pattern." << std::endl;
+                printf("Aircraft %i has landed and exited the traffic pattern. \n", planeid);
+                //std::cout << "Aircraft " << planeid << " has landed and exited the traffic pattern." << std::endl;
                 --numAircraft;
-
             }
 
             atcTalking = false; // Set to false after handling the request
@@ -59,25 +62,32 @@ void plane(int planeid)
 
         else // if air traffic control is talking to another pilot
         {
-           // std::unique_lock<std::mutex> lock(m1);
+            printf("Aircraft %i is requesting landing clearance. \n", planeid);
+            //std::cout << "Aircraft " << planeid << " is requesting landing clearance." << std::endl;
+
             if (numAircraft < maxAircraft) 
             {
-                std::cout << "Aircraft " << planeid << " is requesting landing clearance." << std::endl;
-                std::cout << "Aircraft " << planeid << " is entering the traffic pattern." << std::endl;
+
+                printf("Aircraft %i is entering the traffic pattern. \n", planeid);
+                //std::cout << "Aircraft " << planeid << " is entering the traffic pattern." << std::endl;
                 ++numAircraft; // adds aircraft to the traffic pattern
                 std::this_thread::sleep_for(std::chrono::seconds(1));
-                std::cout << "Aircraft " << planeid << " has landed and exited the traffic pattern." << std::endl;
+                // std::cout << "Aircraft " << planeid << " has landed and exited the traffic pattern." << std::endl;
+                printf("Aircraft %i has landed and exited the traffic pattern. \n", planeid);
+
                 --numAircraft;
 
             }
 
             else
             {
-                std::cout << "Approach pattern full. Aircraft " << planeid << " redirected to another airport" << std::endl;
-                std::cout << "Aircraft " << planeid << " flying to another airport" << std::endl;
+                printf("Approach pattern full. Aircraft %i redirected to another airport. \n", planeid);
+                printf("Aircraft %i flying to another airport. \n", planeid);
+                //std::cout << "Approach pattern full. Aircraft " << planeid << " redirected to another airport" << std::endl;
+                //std::cout << "Aircraft " << planeid << " flying to another airport" << std::endl;
 
             }
-            //lock.unlock();
+
         }
 
 
