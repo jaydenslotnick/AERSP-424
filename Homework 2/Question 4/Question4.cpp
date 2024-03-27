@@ -8,7 +8,7 @@ int main() {
     return -1;
   }
 
-  GLFWwindow* window = glfwCreateWindow( 1000, 1000, "Mach number Curve using OpenGL with GLEW and GLFW", NULL, NULL );
+  GLFWwindow* window = glfwCreateWindow( 1000, 1000, "Predicted induced velocity of a rotor in hover using OpenGL with GLEW and GLFW", NULL, NULL );
   if ( !window ) {
     std::cerr << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
@@ -24,7 +24,6 @@ int main() {
 
   glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
 
-  glViewport(0, 0, 800, 800); // Set viewport to the first quadrant
 
   while ( !glfwWindowShouldClose( window ) ) {
     glClear( GL_COLOR_BUFFER_BIT );
@@ -32,27 +31,33 @@ int main() {
     glBegin( GL_LINES );
     // Draw X and Y axis
     glColor3f( 1.0, 1.0, 1.0 );
-    glVertex2f( 0.0, 0.0 );
-    glVertex2f( 1000 , 0.0 );
-    glVertex2f( 0.0, 0.0 );
-    glVertex2f( 0.0,  5.0 );
+    glVertex2f( -1, 0.0 );
+    glVertex2f( 1.0 , 0.0 );
+    glVertex2f( 0.0, -1.0 );
+    glVertex2f( 0.0, 1.0 );
     glEnd();
 
-    // Plot dynamic pressure curve for a range of velocities
-    // equation chosen: q = 0.5*rho*U^2, q is dynamic pressure (psf), rho is density (slugs/ft^3), U is velocity (ft/s)
-
     
-    float a = 1; // average speed of sound
+    // initalizing variables for the equation for the average induced velocity for a rotor in hover
+    // equation is: vh = sqrt(T/(2*rho*A))
+
+
+    float rho = 0.00238; // sea level density of air (slugs/ft^3)
+    float Area = 1.068; // area of a rotor with a diameter of 14 inches (reported in feet)
+    float maxThrust = 5; // max thrust possible (lbf), arbitarily determined from some experimental data from my lab
+    float maxvh = std::pow(maxThrust / (2 * rho * Area), 0.5); // maximum predicted induced velocity (ft/s)
 
     glBegin(GL_POINTS);
 
     glColor3f( 0.0, 1.0, 0.0 );
 
-    // vary the speed that is traveled from 0 to 1000 m/s
-    for (float U = 0; U < 1; U+=0.001) 
+    for (float Thrust = 0; Thrust < maxThrust; Thrust +=0.001) // varies thrust from 0 to 5 lbf in 0.001 lbf increments
     {
-        float Ma = U / a; // calculation of mach number
-        glVertex2f( U, Ma );
+      
+        float vh = std::pow(Thrust / (2 * rho * Area), 0.5); // calculation of hover velocity (ft/s)
+        glVertex2f( Thrust/maxThrust, vh/maxvh ); // plots individual points normalized by the maximum value
+        // x axis is normalized thrust and y axis is normalized induced velocity for a rotor in hover
+
     }
     glEnd();
 
