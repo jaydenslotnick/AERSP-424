@@ -3,6 +3,7 @@
 #include <mutex>
 #include <chrono>
 #include <vector>
+#include "time.h"
 
 int maxAircraft = 3; // max aircraft in a pattern
 int numAircraft = 0; // current number of aircraft in a pattern
@@ -79,7 +80,7 @@ void plane(int planeid)
 
 int main()
 {
-
+    clock_t totalTime = clock(); // keeps track of total time
     // vector of threads from the planes
     std::vector<std::thread> planeThreads;
     const int numberPlanes = 10;
@@ -95,6 +96,7 @@ int main()
     {
         thread.join();
     }
+    std::cout << "Duration: " << (double)(clock() - totalTime) / 1000 << " seconds" << std::endl; // prints out time
 
     return 0;
 }

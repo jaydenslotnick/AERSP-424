@@ -1,6 +1,5 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <cmath>
 #include <iostream>
 
 int main() {
@@ -9,7 +8,7 @@ int main() {
     return -1;
   }
 
-  GLFWwindow* window = glfwCreateWindow( 500, 500, "Dynamic Pressure Curve using OpenGL with GLEW and GLFW", NULL, NULL );
+  GLFWwindow* window = glfwCreateWindow( 1000, 1000, "Mach number Curve using OpenGL with GLEW and GLFW", NULL, NULL );
   if ( !window ) {
     std::cerr << "Failed to create GLFW window" << std::endl;
     glfwTerminate();
@@ -25,30 +24,35 @@ int main() {
 
   glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
 
+  glViewport(0, 0, 800, 800); // Set viewport to the first quadrant
+
   while ( !glfwWindowShouldClose( window ) ) {
     glClear( GL_COLOR_BUFFER_BIT );
 
     glBegin( GL_LINES );
     // Draw X and Y axis
     glColor3f( 1.0, 1.0, 1.0 );
-    glVertex2f( -1.0, 0.0 );
-    glVertex2f( 1.0, 0.0 );
-    glVertex2f( 0.0, 1.0 );
-    glVertex2f( 0.0, -1.0 );
+    glVertex2f( 0.0, 0.0 );
+    glVertex2f( 1000 , 0.0 );
+    glVertex2f( 0.0, 0.0 );
+    glVertex2f( 0.0,  5.0 );
+    glEnd();
 
     // Plot dynamic pressure curve for a range of velocities
     // equation chosen: q = 0.5*rho*U^2, q is dynamic pressure (psf), rho is density (slugs/ft^3), U is velocity (ft/s)
 
-    double rho = 0.00238; // sea level density, slugs/ft^3, assumed as constant for low speeds
-    double maxVelocity = 45; // sets maximum velocity as 45 ft/s (numbers comparable to an experiment I did)
-    int numPoints = 100; // breaks the velocity into 100 points
+    
+    float a = 1; // average speed of sound
+
+    glBegin(GL_POINTS);
 
     glColor3f( 0.0, 1.0, 0.0 );
-    for (int i = 0; i <= numPoints; ++i) 
+
+    // vary the speed that is traveled from 0 to 1000 m/s
+    for (float U = 0; U < 1; U+=0.001) 
     {
-        double U = (maxVelocity / numPoints) * i;
-        double q = 0.5 * rho * U * U;
-      glVertex2f( U, q );
+        float Ma = U / a; // calculation of mach number
+        glVertex2f( U, Ma );
     }
     glEnd();
 
