@@ -12,7 +12,7 @@ bool atcTalking = false; // atc is not talking inititally
 
 void plane(int planeid)
 {
-    // if there are no other incoming aircraft, ATC falls asleep
+    // if there are no other incoming aircraft, ATC falls asleep, commented out to make the output cleaner
     if (numAircraft == 0)
     {
         // std::cout << "ATC is asleep" << std::endl;
@@ -24,7 +24,7 @@ void plane(int planeid)
     {
         // initializes a connection and sets atcTalking to be true
         {
-            std::unique_lock<std::mutex> lock(m1);
+            std::unique_lock<std::mutex> lock(m1); // locks ATC
             atcTalking = true; // Set to true because atc is now talking to someone
         }
 
@@ -41,7 +41,7 @@ void plane(int planeid)
         else 
         {
             ++numAircraft; // Adds aircraft to the traffic pattern
-            std::unique_lock<std::mutex> lock(m1);
+            std::unique_lock<std::mutex> lock(m1); // locks runway while plane lands
             printf("Aircraft %i is cleared to land and entering the traffic pattern. \n", planeid);
             std::this_thread::sleep_for(std::chrono::seconds(1)); // simulates landing
             printf("Aircraft %i has landed. \n", planeid);
@@ -61,7 +61,7 @@ void plane(int planeid)
         if (numAircraft < maxAircraft) 
         {
             ++numAircraft; // adds aircraft to the traffic pattern
-            std::unique_lock<std::mutex> lock(m1);
+            std::unique_lock<std::mutex> lock(m1); // locks runway while plane lands
             printf("Aircraft %i is cleared to land and entering the traffic pattern. \n", planeid);
             std::this_thread::sleep_for(std::chrono::seconds(1)); // simulates landing
             printf("Aircraft %i has landed. \n", planeid);

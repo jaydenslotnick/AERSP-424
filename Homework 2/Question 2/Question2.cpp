@@ -20,13 +20,10 @@ void createRobot(int id, int toola, int toolb)
     {
         // locks the resource of tools 0 and 4
         std::lock(m0, m4);
-        // std::cout << "Robot " << id << " is collecting data." << std::endl;
         printf("Robot %i is collecting data. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(1)); // reach and grab the tools
-        //std::cout << "Robot " << id << " acquired tools and starts performing a task." << std::endl;
         printf("Robot %i acquired tools and starts performing a task. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(5)); // robot completes task and returns tools
-        //std::cout << "Robot " << id << " finished the task and is returning the tools." << std::endl;
         printf("Robot %i finished the task and is returning the tools. \n", id);
 
         // unlocks tools 0 and 4
@@ -40,13 +37,10 @@ void createRobot(int id, int toola, int toolb)
     {
         // locks the resource of tools 0 and 1
         std::lock(m0, m1);
-        //std::cout << "Robot " << id << " is collecting data." << std::endl;
         printf("Robot %i is collecting data. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(1)); // reach and grab the tools
-        //std::cout << "Robot " << id << " acquired tools and starts performing a task." << std::endl;
         printf("Robot %i acquired tools and starts performing a task. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(5)); // robot completes task and returns tools
-        //std::cout << "Robot " << id << " finished the task and is returning the tools." << std::endl;
         printf("Robot %i finished the task and is returning the tools. \n", id);
 
         // unlocks tools 0 and 1
@@ -61,13 +55,10 @@ void createRobot(int id, int toola, int toolb)
 
         // locks the resource of tools 1 and 2
         std::lock(m1, m2);
-        //std::cout << "Robot " << id << " is collecting data." << std::endl;
         printf("Robot %i is collecting data. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(1)); // reach and grab the tools
-        //std::cout << "Robot " << id << " acquired tools and starts performing a task." << std::endl;
         printf("Robot %i acquired tools and starts performing a task. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(5)); // robot completes task and returns tools
-        //std::cout << "Robot " << id << " finished the task and is returning the tools." << std::endl;
         printf("Robot %i finished the task and is returning the tools. \n", id);
 
         // unlocks tools 1 and 2
@@ -83,13 +74,10 @@ void createRobot(int id, int toola, int toolb)
     {
         // locks the resource of tools 2 and 3
         std::lock(m2, m3);
-        //std::cout << "Robot " << id << " is collecting data." << std::endl;
         printf("Robot %i is collecting data. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(1)); // reach and grab the tools
-        //std::cout << "Robot " << id << " acquired tools and starts performing a task." << std::endl;
         printf("Robot %i acquired tools and starts performing a task. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(5)); // robot completes task and returns tools
-        //std::cout << "Robot " << id << " finished the task and is returning the tools." << std::endl;
         printf("Robot %i finished the task and is returning the tools. \n", id);
 
         // unlocks tools 2 and 3
@@ -103,13 +91,10 @@ void createRobot(int id, int toola, int toolb)
     {
         // locks the resource of tools 3 and 4
         std::lock(m3, m4);
-        //std::cout << "Robot " << id << " is collecting data." << std::endl;
         printf("Robot %i is collecting data. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(1)); // reach and grab the tools
-        //std::cout << "Robot " << id << " acquired tools and starts performing a task." << std::endl;
         printf("Robot %i acquired tools and starts performing a task. \n", id);
         std::this_thread::sleep_for(std::chrono::seconds(5)); // robot completes task and returns tools
-        //std::cout << "Robot " << id << " finished the task and is returning the tools." << std::endl;
         printf("Robot %i finished the task and is returning the tools. \n", id);
 
         // unlocks tools 3 and 4
@@ -125,6 +110,7 @@ int main()
     clock_t totalTime = clock(); // keeps track of total time
 
     // declaration of tools
+    // tool 0 is to the right of robot 0. Tools go sequentially clockwise
     int tool0 = 0;
     int tool1 = 1;
     int tool2 = 2;
@@ -132,6 +118,7 @@ int main()
     int tool4 = 4;
 
     // creates threads for each robot, passes in robot id and tools used
+    // robot 0 is the top robot in the image in the project assignment, then the robots go sequentially clockwise
     std::thread robot0(createRobot, 0, tool0, tool4);
     std::thread robot1(createRobot, 1, tool0, tool1);
     std::thread robot2(createRobot, 2, tool1, tool2);
